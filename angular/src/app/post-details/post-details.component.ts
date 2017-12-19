@@ -19,7 +19,7 @@ export class PostDetailsComponent implements OnInit {
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    this.route.params.subscribe(params => this.postService.getPost(params["id"]).subscribe(data => this.post$ = data));
+    this.route.params.subscribe(params => this.postService.getPost(params["id"]).subscribe(data => this.post$ = data as Observable<Post>));
      //= this.route.paramMap.switchMap((params: ParamMap) => this.postService.getPost(params.get('id'))) as Observable<Post>;
     this.loggedIn = (localStorage.getItem('currentUser') !== null);
     console.log(localStorage.getItem('currentUser'));
