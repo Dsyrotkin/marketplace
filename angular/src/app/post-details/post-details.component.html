@@ -1,0 +1,24 @@
+<div class="row" *ngIf="post$">
+  <div class="panel panel-default">
+    <div class="panel-heading"><h3>{{post$.title}}&nbsp;{{post$.updated_at}}</h3></div>
+    <div class="panel-body">
+      <div class="col-md-3">
+        <img *ngIf="post$.imageUrl" src="{{post$.imageUrl}}">
+        <span *ngIf="!post$.imageUrl" class="glyphicon glyphicon-picture" style="font-size: 4em;"></span>
+      </div>
+      <div class="col-md-6">
+        <dl>
+          <dt>Description</dt><dd>{{post$.description}}</dd>
+        </dl>
+      </div>
+      <div class="col-md-3">
+        <span class="glyphicon glyphicon-map-marker">{{post$.location.city + ', ' + post$.location.state + ', ' + post$.location.zip}}</span>
+        <br><span class="glyphicon glyphicon-phone">{{post$.contact}}</span>
+      </div>
+    </div>
+    <div class="panel-footer text-right" *ngIf="loggedIn">
+      <button (click)="edit()" class="btn btn-success"><span class="glyphicon glyphicon-edit"></span>&nbsp;Edit</button>
+      <button (click)="remove()" class="btn btn-warning"><span class="glyphicon glyphicon-remove"></span>&nbsp;Delete</button>
+    </div>
+  </div>
+</div>
