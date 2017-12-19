@@ -7,14 +7,16 @@ mongoose.connect('mongodb://localhost/marketplace', {
 });
 
 const postSchema = new mongoose.Schema({
-    name: String,
+    title: String,
+    description: String,
     username: String,
     category: String,
     sold: Boolean,
     location: { state: String, city: String, zip: String },
     contanct: String,
     created_at: Date,
-    updated_at: Date });
+    updated_at: Date,
+    imageUrl: String});
 const PostModel = mongoose.model('post', postSchema);
 
 const postListchema = new mongoose.Schema({
