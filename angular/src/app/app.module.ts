@@ -14,6 +14,10 @@ import { LoginComponent } from './login/index';
 import { RegisterComponent } from './register/index';
 import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import { PostsComponent } from './posts/posts.component';
+import {PostService} from "./_services/post.service";
+import { PostDetailsComponent } from './post-details/post-details.component';
+import { NavigationComponent } from './navigation/navigation.component';
 
 
 @NgModule({
@@ -22,7 +26,10 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
     AlertComponent,
     HomeComponent,
     LoginComponent,
-    RegisterComponent
+    RegisterComponent,
+    PostsComponent,
+    PostDetailsComponent,
+    NavigationComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +48,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
       useClass: JwtInterceptor,
       multi: true
     },
-
+    PostService,
     fakeBackendProvider
   ],
   bootstrap: [AppComponent]
