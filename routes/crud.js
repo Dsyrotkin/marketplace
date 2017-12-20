@@ -1,8 +1,9 @@
 var express = require('express');
 const mongoose = require('mongoose');
 var router = express.Router();
+var config = require('../config');
 
-mongoose.connect('mongodb://localhost/marketplace', {
+mongoose.connect(config.database, {
     useMongoClient: true,
 });
 
@@ -18,13 +19,6 @@ const postSchema = new mongoose.Schema({
     updated_at: Date,
     imageUrl: String});
 const PostModel = mongoose.model('post', postSchema);
-
-const postListchema = new mongoose.Schema({
-    id: String,
-    title: String,
-    artist: String});
-
-const CDModel = mongoose.model('CD', postListchema);
 
 let postList = [];
 
