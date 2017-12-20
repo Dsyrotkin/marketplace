@@ -1,8 +1,9 @@
 var express = require('express');
 const mongoose = require('mongoose');
 var router = express.Router();
+var config = require('../config');
 
-mongoose.connect('mongodb://localhost/marketplace', {
+mongoose.connect(config.database, {
     useMongoClient: true,
 });
 
