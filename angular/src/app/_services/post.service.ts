@@ -17,4 +17,8 @@ export class PostService {
   getPost(id: String){
     return this.http.get("http://localhost:3000/crud/post/"+id);
   }
+
+  getAllCategories(){
+    return this.http.get('http://localhost:3000/category/category');
+  }
 }
