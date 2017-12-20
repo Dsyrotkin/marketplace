@@ -9,6 +9,7 @@ var cors = require('cors');
 var index = require('./routes/index');
 var users = require('./routes/users');
 var crud = require('./routes/crud');
+var category = require('./routes/category');
 
 var app = express();
 app.use(cors());
@@ -38,6 +39,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/', index);
 app.use('/users', users);
 app.use('/crud', crud);
+app.use('/category', category);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

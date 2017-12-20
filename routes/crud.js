@@ -19,13 +19,6 @@ const postSchema = new mongoose.Schema({
     imageUrl: String});
 const PostModel = mongoose.model('post', postSchema);
 
-const postListchema = new mongoose.Schema({
-    id: String,
-    title: String,
-    artist: String});
-
-const CDModel = mongoose.model('CD', postListchema);
-
 let postList = [];
 
 router.get('/post', function(req, res, next) {
