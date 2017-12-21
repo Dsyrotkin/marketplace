@@ -14,13 +14,10 @@ export class AuthenticationService {
     login(email: string, password: string) {
         return this.http.post<any>('http://localhost:3000/api/users/login', { email: email, password: password })
             .map(user => {
-              console.log(user);
 
                 if (user && user.token) {
                     localStorage.setItem('currentUser', JSON.stringify(user));
                     this.loggedIn.next(true);
-                  // $rootScope.$broadcast('userLoggedIn');
-
                 }
                 return user;
 

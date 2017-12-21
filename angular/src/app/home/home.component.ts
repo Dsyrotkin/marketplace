@@ -10,21 +10,23 @@ import { UserService } from '../_services/index';
 
 export class HomeComponent implements OnInit {
     currentUser: User;
+    anotherUser: any;
 
     constructor(private userService: UserService) {
         this.currentUser = JSON.parse(localStorage.getItem('currentUser'));
     }
 
-    ngOnInit() {
-        //this.loadAllUsers();
+    ngOnInit() { this.userService.getByUsername('dsyrotkin')
+      .subscribe(data => {
+        this.anotherUser = data;
+      });
     }
 
     deleteUser(username: string) {
         this.userService.delete(username).subscribe(() => { });
     }
 
-    private loadAllUsers() {
-        // this.userService.getAll().subscribe(users => { //noinspection TypeScriptValidateTypes
-        //   this.users = users; });
+    loadAllUsers() {
+        this.userService.getAll().subscribe(users => { });
     }
 }

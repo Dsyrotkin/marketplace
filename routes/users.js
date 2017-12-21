@@ -6,7 +6,11 @@ var User = require('../models/User');
 
 var bodyParser = require("body-parser");
 var morgan = require("morgan");
-var LocalStrategy = require('passport-local').Strategy;
+var passport = require("passport");
+var passportJWT = require("passport-jwt");
+
+var ExtractJwt = passportJWT.ExtractJwt;
+var JwtStrategy = passportJWT.Strategy;
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
@@ -15,32 +19,33 @@ mongoose.connect(config.database, {
     useMongoClient: true,
 });
 
-function getTokenFromHeader(req){
-	if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Token') {
-		return req.headers.authorization.split(' ')[1];
-	}
-
-	return null;
+var jwtOptions = {
+	jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+	secretOrKey: config.secret
 }
 
-router.get('/setup', function(req, res) {
-	
-	  var user = new User({ 
-		username: 'test', 
-		email: 'test@gmail.com',
-		password: 'test',
-		firstName: 'John',
-		lastName: 'Smith',
-		registrationDate: '11/11/2007'
-	  });
-	
-	  user.save(function(err) {
-		if (err) throw err;
-	
-		console.log('User saved successfully');
-		res.json({ success: true });
-	  });
+var strategy = new JwtStrategy(jwtOptions, function(jwtPayload, next) {
+  	console.log('payload received', jwtPayload);
+  	var user = User.findOne({_id: jwtPayload._id}, function(err, user) {
+		if (user) {
+			next(null, user);
+		} else {
+			next(null, false);
+		}
+	})
+});
+
+passport.serializeUser(function(user, done) {
+	done(null, user.id);
+});
+  
+passport.deserializeUser(function(id, done) {
+	User.findById(id, function(err, user) {
+		done(err, user);
 	});
+});
+
+passport.use(strategy);
 
 router.get('/list', function(req, res) {
 	User.find({}, function(err, users) {
@@ -57,22 +62,22 @@ router.post('/login', function(req, res) {
             });
         } else {
             if (!user) {
-				console.log('123');
-				res.json({
-					type: false,
-					data: 'Incorrect username.'
-				});
+				res.status(401).json({message:"no such user found"});
 			}
 
 			let checkPasswords = user.comparePassword(req.body.password);
 			if (checkPasswords) {
 				user.token = user.generateJWT();
-				res.json(user);
-			} else {
 				res.json({
-					type: false,
-					data: 'Incorrect password.'
+					username: user.username,
+					email: user.email,
+					firstName: user.firstName,
+					lastName: user.lastName,
+					registrationDate: user.registrationDate,
+					token: user.token
 				});
+			} else {
+				res.status(401).json({message:"passwords did not match"});
 			}
         }
 	});
@@ -114,13 +119,13 @@ router.post('/register', function(req, res) {
     });
 });
 
-router.get('/:username', function(req, res, next){
+router.get('/:username', passport.authenticate('jwt', { session: false }), function(req, res, next){
     User.findOne({username: req.params.username}, function(err, data){
         res.send(data);
     });
 });
 
-router.post('/:username', function(req, res, next){
+router.post('/:username', passport.authenticate('jwt', { session: false }), function(req, res, next){
 
     User.findOneAndUpdate({username: req.params.username}, req.body, function(err, data){
         if (err) res.send(JSON.stringify(err));
@@ -130,7 +135,7 @@ router.post('/:username', function(req, res, next){
 
 });
 
-router.delete('/:username', function(req, res, next){
+router.delete('/:username', passport.authenticate('jwt', { session: false }), function(req, res, next){
     User.findByIdAndRemove({username: req.params.username}, function(err, data){
         if (err) throw err;
         console.log('User successfully removed!');
