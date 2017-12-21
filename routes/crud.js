@@ -26,14 +26,14 @@ router.get('/post', function(req, res, next) {
 
     PostModel.find({}, function(err, postData){
 
-        console.log(postData);
+        // console.log(postData);
         res.send(JSON.stringify(postData));
     });
 
 });
 
 router.get('/post/:id', function(req, res, next){
-    console.log("get:" + req.params.id);
+    //console.log("get:" + req.params.id);
     PostModel.findOne({_id: req.params.id}, function(err, data){
         res.send(data);
     });
@@ -41,7 +41,12 @@ router.get('/post/:id', function(req, res, next){
 
 router.post('/post', function(req, res, next){
 
+
+
     let post = new PostModel(req.body);
+
+    console.log(req.body);
+    console.log(post);
 
     post.save();
     PostModel.find(function(err, postData){
@@ -55,7 +60,7 @@ router.post('/post/:id', function(req, res, next){
 
     PostModel.findOneAndUpdate({_id: req.params.id}, req.body, function(err, data){
         if (err) res.send(JSON.stringify(err));
-        console.log('User successfully updated!');
+        //console.log('User successfully updated!');
         res.send(JSON.stringify(data));
     });
 
@@ -64,7 +69,7 @@ router.post('/post/:id', function(req, res, next){
 router.delete('/post/:id', function(req, res, next){
     PostModel.findByIdAndRemove({_id: req.params.id}, function(err, data){
         if (err) throw err;
-        console.log('Post successfully removed!');
+        //console.log('Post successfully removed!');
         res.send(JSON.stringify(data));
     });
 });
