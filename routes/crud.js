@@ -14,7 +14,7 @@ const postSchema = new mongoose.Schema({
     category: String,
     sold: Boolean,
     location: { state: String, city: String, zip: String },
-    contanct: String,
+    contact: String,
     created_at: Date,
     updated_at: Date,
     imageUrl: String});
@@ -64,7 +64,7 @@ router.post('/post/:id', function(req, res, next){
 router.delete('/post/:id', function(req, res, next){
     PostModel.findByIdAndRemove({_id: req.params.id}, function(err, data){
         if (err) throw err;
-        console.log('User successfully removed!');
+        console.log('Post successfully removed!');
         res.send(JSON.stringify(data));
     });
 });
