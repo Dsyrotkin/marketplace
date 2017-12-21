@@ -8,11 +8,11 @@ export class UserService {
     constructor(private http: HttpClient) { }
 
     getAll() {
-        return this.http.get<User[]>('/api/users');
+        return this.http.get<User[]>('/api/users/list');
     }
 
-    getById(id: number) {
-        return this.http.get('/api/users/' + id);
+    getByUsername(username: string) {
+        return this.http.get('/api/users/' + username);
     }
 
     create(user: User) {
