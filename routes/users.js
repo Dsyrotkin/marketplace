@@ -5,7 +5,6 @@ var config = require('../config');
 var User = require('../models/User');
 var bodyParser = require("body-parser");
 var morgan = require("morgan");
-var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 router.use(bodyParser.urlencoded({ extended: true }));
@@ -111,6 +110,30 @@ router.post('/register', function(req, res) {
                 })
             }
         }
+    });
+});
+
+router.get('/:username', function(req, res, next){
+    User.findOne({username: req.params.username}, function(err, data){
+        res.send(data);
+    });
+});
+
+router.post('/:username', function(req, res, next){
+
+    User.findOneAndUpdate({username: req.params.username}, req.body, function(err, data){
+        if (err) res.send(JSON.stringify(err));
+        console.log('User successfully updated!');
+        res.send(JSON.stringify(data));
+    });
+
+});
+
+router.delete('/:username', function(req, res, next){
+    User.findByIdAndRemove({username: req.params.username}, function(err, data){
+        if (err) throw err;
+        console.log('User successfully removed!');
+        res.send(JSON.stringify(data));
     });
 });
 
