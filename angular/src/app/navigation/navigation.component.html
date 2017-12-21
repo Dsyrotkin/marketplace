@@ -15,7 +15,7 @@
         <li class=""><a [routerLink] ="['/posts']">Posts</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li *ngIf="loggedIn"><p class="navbar-text">Welcome {{user}}</p></li>
+        <li *ngIf="loggedIn"><p class="navbar-text">Welcome {{user.firstName}} {{user.lastName}}</p></li>
         <li *ngIf="loggedIn" (click)="logout()"><a href="#">Logout</a></li>
         <li *ngIf="!loggedIn" (click)="logout()"><a href="#">Register</a></li>
         <li *ngIf="!loggedIn" ><a [routerLink]="['/login']">LogIn</a></li>
