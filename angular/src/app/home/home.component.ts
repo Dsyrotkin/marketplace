@@ -19,8 +19,8 @@ export class HomeComponent implements OnInit {
         //this.loadAllUsers();
     }
 
-    deleteUser(id: number) {
-        this.userService.delete(id).subscribe(() => { this.loadAllUsers() });
+    deleteUser(username: string) {
+        this.userService.delete(username).subscribe(() => { });
     }
 
     private loadAllUsers() {
