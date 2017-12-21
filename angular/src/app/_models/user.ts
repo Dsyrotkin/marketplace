@@ -6,4 +6,5 @@
     lastName: string;
     email: string;
     registrationDate: Date;
+    token: String;
 }

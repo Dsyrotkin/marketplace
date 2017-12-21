@@ -17,6 +17,9 @@ import { PostsComponent } from './posts/posts.component';
 import {PostService} from "./_services/post.service";
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { NavigationComponent } from './navigation/navigation.component';
+import { PostFormComponent } from './post/post-form/post-form.component';
+import {post} from "selenium-webdriver/http";
+import {PostModule} from "./post/post.module";
 
 
 @NgModule({
@@ -28,14 +31,17 @@ import { NavigationComponent } from './navigation/navigation.component';
     RegisterComponent,
     PostsComponent,
     PostDetailsComponent,
-    NavigationComponent
+    NavigationComponent,
+
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    routing
+    routing,
+    FormsModule,
+    PostModule,
   ],
   providers: [
     AuthGuard,
