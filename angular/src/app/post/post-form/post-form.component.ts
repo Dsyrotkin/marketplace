@@ -17,25 +17,29 @@ export class PostFormComponent implements OnInit {
   alertContent: String;
   categories: String[];
   selectedCategory: String;
+  //file: String;
+
   constructor(private postService: PostService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
-    if(this.route.params["id"]){
+
+    /*if(this.route.paramMap.){*/
     this.route.params.subscribe(params => this.postService.getPost(params["id"]).subscribe(data => {
       this.currentPost = data as Post;
-      //this.postId = (data as Post)._id;
+
     }));
       this.selectedCategory = this.currentPost.category;
-    }else {
+    /*}else {
       this.currentPost = new Post();
+      // console.log("ngOnInit(3)" + this.currentPost.imageUrl);
       this.selectedCategory = "";
     }
-
+*/
     this.postService.getAllCategories().subscribe(data => {
       this.categories = (data as {category: String, _id: String}[]).map(x=> x.category);
 
-      console.log("ngOnInit(2)" + this.categories);
+      // console.log("ngOnInit(2)" + this.categories);
     });
   }
 
@@ -55,5 +59,6 @@ export class PostFormComponent implements OnInit {
         this.showForm = false;
     });
   }
+
 
 }

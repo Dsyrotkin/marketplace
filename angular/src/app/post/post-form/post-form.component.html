@@ -1,4 +1,5 @@
-<form #postForm="ngForm" (submit)="submit()" *ngIf="showForm">
+
+  <form #postForm="ngForm" (submit)="submit()" *ngIf="showForm">
   <div class="form-group">
     <label for="title">Title</label>
     <input class="form-control" type="text" [(ngModel)]="currentPost.title" id="title" name="title" #title="ngModel" required>
@@ -55,4 +56,5 @@
     <button class="btn btn-default">Submit</button>
   </div>
 </form>
+
 <div *ngIf="!showForm" class="{{currentClasses}}">{{alertContent}}</div>

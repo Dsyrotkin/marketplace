@@ -6,8 +6,8 @@ export class Post {
   category: String;
   sold: Boolean ;
   location: { state: String, city: String, zip: String };
-  contanct: String;
+  contact: String;
   created_at: Date;
   updated_at: Date;
-  imgageUrl: String;
+  imageUrl: String;
 }

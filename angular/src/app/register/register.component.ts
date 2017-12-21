@@ -6,7 +6,7 @@ import {RegistrationService} from "../_services/registration.service";
 
 @Component({
     moduleId: module.id,
-    templateUrl: 'register.component.html'
+    templateUrl: './register.component.html'
 })
 
 export class RegisterComponent {
