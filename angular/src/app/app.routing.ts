@@ -8,6 +8,7 @@ import {AppComponent} from "./app.component";
 import {PostsComponent} from "./posts/posts.component";
 import {PostDetailsComponent} from "./post-details/post-details.component";
 import {PostFormComponent} from "./post/post-form/post-form.component";
+import {NewPostFormComponent} from "./post/new-post-form/new-post-form.component";
 
 const appRoutes: Routes = [
   //{ path: '', component: AppComponent },
@@ -17,7 +18,7 @@ const appRoutes: Routes = [
   { path: 'posts', component: PostsComponent },
   { path: 'post/:id', component: PostDetailsComponent },
   {path: 'postform/:id', component: PostFormComponent},
-  {path: 'postform', component: PostFormComponent},
+  {path: 'postform', component: NewPostFormComponent},
 
     { path: '**', redirectTo: '' }
 ];

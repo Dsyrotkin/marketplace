@@ -10,4 +10,9 @@ export class Post {
   created_at: Date;
   updated_at: Date;
   imageUrl: String;
+
+  constructor(values: Object = {}) {
+    //Constructor initialization
+    Object.assign(this, values);
+  }
 }

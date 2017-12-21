@@ -25,4 +25,8 @@ export class PostService {
   save(post: Post){
     return this.http.post("http://localhost:3000/crud/post/"+post._id,post);
   }
+
+  new(post: Post){
+    return this.http.post("http://localhost:3000/crud/post/",post);
+  }
 }

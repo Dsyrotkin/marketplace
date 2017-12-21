@@ -16,28 +16,35 @@ export class PostFormComponent implements OnInit {
   currentClasses: String;
   alertContent: String;
   categories: String[];
-  selectedCategory: String;
+  selectedCategory: String="";
   //file: String;
+  _id: String="";
 
   constructor(private postService: PostService,
               private route: ActivatedRoute) { }
 
   ngOnInit() {
 
-    /*if(this.route.paramMap.){*/
-    this.route.params.subscribe(params => this.postService.getPost(params["id"]).subscribe(data => {
-      this.currentPost = data as Post;
 
-    }));
-      this.selectedCategory = this.currentPost.category;
-    /*}else {
-      this.currentPost = new Post();
-      // console.log("ngOnInit(3)" + this.currentPost.imageUrl);
-      this.selectedCategory = "";
-    }
-*/
+    this.route.params.subscribe(params => {
+      this.postService.getPost(params["id"]).subscribe(data => {
+
+        this.currentPost = data as Post;
+        this.selectedCategory = (data as Post).category;
+        console.log("OnInit(1)");
+        console.log(JSON.stringify(this.currentPost));
+      });
+    });
+
+    console.log("OnInit(2)");
+    console.log(JSON.stringify(this.currentPost));
+    //this.selectedCategory = this.currentPost.category;
+
     this.postService.getAllCategories().subscribe(data => {
       this.categories = (data as {category: String, _id: String}[]).map(x=> x.category);
+      if(this.selectedCategory.length ==0){
+        this.selectedCategory = this.categories[0] as String;
+      }
 
       // console.log("ngOnInit(2)" + this.categories);
     });

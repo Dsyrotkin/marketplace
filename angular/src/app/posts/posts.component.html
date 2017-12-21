@@ -6,7 +6,9 @@
       <select class="form-control" [(ngModel)]="selectedCategory" (change)="filter()" name="categoryList">
       <option *ngFor="let category of categories" [ngValue]="category" [selected]="selectedCategory == category" >{{category}}</option>
       </select>
+      <a [routerLink]="['/postform']" class="btn btn-primary"><span class="glyphicon glyphicon-plus"></span> Add New Post</a>
     </form>
+
   </div>
   <div class="panel-body">
     <div class="row">
