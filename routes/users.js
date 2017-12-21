@@ -3,28 +3,16 @@ var mongoose = require('mongoose');
 var router = express.Router();
 var config = require('../config');
 var User = require('../models/User');
-var initPassport = require('../authenticate').initPassport;
-var jwt = require('express-jwt');
 var bodyParser = require("body-parser");
 var morgan = require("morgan");
-var passport = require('passport')
-var LocalStrategy = require('passport-local').Strategy
+var passport = require('passport');
+var LocalStrategy = require('passport-local').Strategy;
 
 router.use(bodyParser.urlencoded({ extended: true }));
 router.use(bodyParser.json());
 
 mongoose.connect(config.database, {
     useMongoClient: true,
-});
-
-passport.serializeUser(function(user, done) {
-    done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-    User.findById(id, function(err, user) {
-         done(err, user);
-    });
 });
 
 function getTokenFromHeader(req){
@@ -35,20 +23,6 @@ function getTokenFromHeader(req){
 	return null;
 }
 
-var auth = {
-	required: jwt({
-		secret: config.secret,
-		userProperty: 'payload',
-		getToken: getTokenFromHeader
-	}),
-	optional: jwt({
-		secret: config.secret,
-		userProperty: 'payload',
-		credentialsRequired: false,
-		getToken: getTokenFromHeader
-	})
-};
-
 router.get('/setup', function(req, res) {
 	
 	  var user = new User({ 
@@ -57,8 +31,7 @@ router.get('/setup', function(req, res) {
 		password: 'test',
 		firstName: 'John',
 		lastName: 'Smith',
-		registrationDate: '11/11/2007',
-		token: 'test_token'
+		registrationDate: '11/11/2007'
 	  });
 	
 	  user.save(function(err) {
@@ -75,9 +48,8 @@ router.get('/list', function(req, res) {
 	});
 });
 
-router.post('/authenticate', function(req, res) {
-	console.log(req.body.email + " " + req.body.password);
-    User.findOne({email: req.body.email, password: req.body.password}, function(err, user) {
+router.post('/login', function(req, res) {
+    User.findOne({email: req.body.email}, function(err, user) {
         if (err) {
             res.json({
                 type: false,
@@ -85,15 +57,23 @@ router.post('/authenticate', function(req, res) {
             });
         } else {
             if (!user) {
-				return done(null, false, { message: 'Incorrect username.' });
+				console.log('123');
+				res.json({
+					type: false,
+					data: 'Incorrect username.'
+				});
 			}
 
-			if (user.password != req.body.password) {
-				console.log("Wrong password");
-				return done(null, false, {alert: 'Incorrect password.'});
+			let checkPasswords = user.comparePassword(req.body.password);
+			if (checkPasswords) {
+				user.token = user.generateJWT();
+				res.json(user);
+			} else {
+				res.json({
+					type: false,
+					data: 'Incorrect password.'
+				});
 			}
-			user.token = 'test_token';
-			return res.json(user);
         }
 	});
 });
@@ -120,7 +100,7 @@ router.post('/register', function(req, res) {
 				userModel.lastName = req.body.lastName;
 				userModel.registrationDate = new Date();
                 userModel.save(function(err, user) {
-                    user.token = 'test_token';
+                    user.token = user.generateJWT();
                     user.save(function(err, user1) {
                         res.json({
                             type: true,

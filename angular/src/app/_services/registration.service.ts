@@ -16,11 +16,6 @@ export class RegistrationService {
           firstName: firstName
       })
       .map(user => {
-        console.log(user);
-          // if (user.data && user.token) {
-          //   localStorage.setItem('currentUser', JSON.stringify(user.data));
-          // }
-
           return user.data;
       });
     }
