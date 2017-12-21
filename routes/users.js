@@ -3,6 +3,7 @@ var mongoose = require('mongoose');
 var router = express.Router();
 var config = require('../config');
 var User = require('../models/User');
+
 var bodyParser = require("body-parser");
 var morgan = require("morgan");
 var passport = require('passport');
