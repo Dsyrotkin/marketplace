@@ -49,7 +49,7 @@ router.get('/list', function(req, res) {
 });
 
 router.post('/login', function(req, res) {
-    User.findOne({email: req.body.email}, function(err, user) {
+    User.findOne({'email': req.body.email}, function(err, user) {
         if (err) {
             res.json({
                 type: false,
