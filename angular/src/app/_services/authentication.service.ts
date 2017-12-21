@@ -7,14 +7,15 @@ import 'rxjs/add/operator/map'
 export class AuthenticationService {
     constructor(private http: HttpClient) { }
 
-    login(username: string, password: string) {
-        return this.http.post<any>('/api/authenticate', { username: username, password: password })
+    login(email: string, password: string) {
+        return this.http.post<any>('http://localhost:3000/api/users/login', { email: email, password: password })
             .map(user => {
-                if (user && user.token) {
-                    localStorage.setItem('currentUser', JSON.stringify(user));
-                }
+              console.log(user);
+              if (user && user.token) {
+                  localStorage.setItem('currentUser', JSON.stringify(user));
+              }
 
-                return user;
+              return user;
             });
     }
 

@@ -1,5 +1,13 @@
 <div class="panel panel-default">
-  <div class="panel-heading"></div>
+  <div class="panel-heading">
+    <form #form="ngForm" class="form-inline">
+    <label>Category</label>
+
+      <select class="form-control" [(ngModel)]="selectedCategory" (change)="filter()" name="categoryList">
+      <option *ngFor="let category of categories" [ngValue]="category" [selected]="selectedCategory == category" >{{category}}</option>
+      </select>
+    </form>
+  </div>
   <div class="panel-body">
     <div class="row">
       <div *ngFor="let post of filtered">
