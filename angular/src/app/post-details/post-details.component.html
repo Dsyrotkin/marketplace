@@ -1,6 +1,6 @@
 <div class="row" *ngIf="post$">
   <div class="panel panel-default">
-    <div class="panel-heading"><h3>{{post$.title}}&nbsp;{{post$.updated_at}}</h3></div>
+    <div class="panel-heading"><h3>{{post$.title}}&nbsp;{{post$.updated_at | date:'dd/MM/yyyy'}}</h3></div>
     <div class="panel-body">
       <div class="col-md-3">
         <img *ngIf="post$.imageUrl" src="{{post$.imageUrl}}">

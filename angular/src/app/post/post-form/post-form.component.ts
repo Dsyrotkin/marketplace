@@ -15,10 +15,9 @@ export class PostFormComponent implements OnInit {
   showForm: boolean =true;
   currentClasses: String;
   alertContent: String;
-  categories: String[];
-  selectedCategory: String="";
+  private categories: String[];
+  selectedCategory: String;
   //file: String;
-  _id: String="";
 
   constructor(private postService: PostService,
               private route: ActivatedRoute) { }

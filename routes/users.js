@@ -73,6 +73,8 @@ router.post('/register', function(req, res) {
 				userModel.lastName = req.body.lastName;
 				userModel.registrationDate = new Date();
                 userModel.save(function(err, user) {
+                    console.log(user);
+                    console.log(err);
                     user.token = user.generateJWT();
                     user.save(function(err, user1) {
                         res.json({

@@ -15,7 +15,7 @@ export class PostsComponent implements OnInit {
   filtered: Post[];
   categories: String[];
   selectedCategory: String="Select Category";
-  loggedIn: boolean;
+  loggedIn: boolean=false;
   user: User;
 
   constructor(private postService: PostService, private authenticationService: AuthenticationService) { }
@@ -36,8 +36,11 @@ export class PostsComponent implements OnInit {
       // console.log("ngOnInit(2)" + this.categories);
     });
 
+    this.loggedIn = (localStorage.getItem('currentUser') !== null);
     this.authenticationService.loggedIn.subscribe(data => {
-      this.loggedIn = data;
+      this.loggedIn = data
+      console.log(data);
+      console.log(this.loggedIn);
       this.user = JSON.parse(localStorage.getItem('currentUser'));
     });
   }
