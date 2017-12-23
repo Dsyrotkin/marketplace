@@ -17,9 +17,10 @@ import { PostsComponent } from './posts/posts.component';
 import {PostService} from "./_services/post.service";
 import { PostDetailsComponent } from './post-details/post-details.component';
 import { NavigationComponent } from './navigation/navigation.component';
-import { PostFormComponent } from './post/post-form/post-form.component';
-import {post} from "selenium-webdriver/http";
+
 import {PostModule} from "./post/post.module";
+
+import { UsernameDirective } from './_directives/username.directive';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import {PostModule} from "./post/post.module";
     PostsComponent,
     PostDetailsComponent,
     NavigationComponent,
+    UsernameDirective,
 
   ],
   imports: [
